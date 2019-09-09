@@ -1,0 +1,15 @@
+{
+  "name": "bigfeed",
+  "version": "1.0.0",
+  "description": "Sistema de Feed",
+  "main": "index.js",
+  "author": "Aldrick",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/server.js"    
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^1.19.2"
+  }
+}
