@@ -14,12 +14,12 @@ module.exports = {
 
         const userExists = await User.findOne({
                 where: {
-                    nome: nome, 
+                    nome: nome,     
                     apelido: apelido, 
                     email: email,
                     senha: senha}});
         if(userExists) 
-            return res.json(userExists);
+            return res.status(400).json({userExists, response: 'Usuário já existe'});
         
         const user = await User.create({
             nome: nome,
@@ -27,7 +27,7 @@ module.exports = {
             email: email,
             senha: senha });
         
-        return res.json({ response: 200 });
+        return res.status(200).json({ response: 'Operação concluido com exito' });
     },
 
     async select(req, res) { // Função utilizada na tela de Login do usuario
@@ -43,9 +43,9 @@ module.exports = {
             }});
         
         if(user == '')
-            return res.json({usuario:usuario, response: false});
+            return res.status(404).json({usuario:usuario, response: 'Usuário não encontrado'});
 
-        return res.json({user, response: 200 });
+        return res.json({user, response: 'Operação concluida com exito'});
     },
 
     async update(req, res) {
@@ -74,9 +74,9 @@ module.exports = {
                 where: { id: id }});
             
             if (password == '')
-                return res.json({response: 'Operação não conluida com exito'});
+                return res.status(500).json({response: 'Não foi possível atualizar senha'});
             
-            return res.json({ response: 200 });
+            return res.status(200).json({ response: 'Senha atualizada com sucesso' });
         }
 
         if(nome || apelido || email) {
@@ -88,23 +88,25 @@ module.exports = {
                 { where: { id: id }});
 
             if (user == '')
-                return res.json({ response: 'Operação não conluida com exito' });
+                return res.status(400).json({ response: 'Atualização falhou' });
 
-            return res.json({ user, response: 200 });
+            return res.status(200).json({ user, response: 'Atualização realizada com sucesso' });
         }
 
-        return res.json({ response: false });
+        return res.status(400).json({ response: 'Operação falhou' });
     },
 
     async show(req, res) {
-      
+        
         const user  = await User.findAll({
             
         });
-        
-        if (!user) 
-            return res.json({response:'entrei no set'});
-        
-        return res.json({response: 200});
-    }
+       // O problema esta na rota que leva a função select()
+       // Que e a mesma rota dessa função 
+        if (user == '') 
+            return res.status(400).json({response:'Operaçao falhou'});
+
+        return res.status(200).json({response: 'Operação bem sucedida'});
+    },
+
 };
