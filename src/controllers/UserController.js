@@ -106,7 +106,24 @@ module.exports = {
         if (user == '') 
             return res.status(400).json({response:'Operaçao falhou'});
 
-        return res.status(200).json({response: 'Operação bem sucedida'});
+        return res.status(200).json({user, response: 'Operação bem sucedida'});
     },
+
+    async delete(req, res){
+
+        const { id } = req.params;
+
+        if (id == '')
+            return res.status(400).json({response: 'Valor de id vazio'});
+        
+        const user = await User.destroy({
+            where : {id:id}
+        });
+
+        if (user == '')
+            return res.status(400).json({response: 'Exclusão falhou'});
+        
+        return res.status(200).json({response: 'Exclusão efetuada com sucesso'});
+    }
 
 };
