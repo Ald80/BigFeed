@@ -2,14 +2,18 @@
   "name": "bigfeed",
   "version": "1.0.0",
   "description": "Sistema de Feed",
-  "main": "index.js",
+  "main": "server.js",
   "author": "Aldrick",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.js"    
+    "dev": "nodemon src/server.js"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "nodemon": "^1.19.2"
+    "mysql2": "^1.7.0",
+    "nodemon": "^1.19.2",
+    "sequelize": "^5.18.4"
   }
 }
